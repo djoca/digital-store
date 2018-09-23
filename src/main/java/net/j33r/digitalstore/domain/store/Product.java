@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -16,6 +17,7 @@ import lombok.Getter;
  *
  * @author joses
  */
+@AllArgsConstructor
 @Getter
 @Entity
 @Table(name = "product")
@@ -23,17 +25,22 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private final Long id;
 
     @Column(name = "name")
-    private String name;
+    private final String name;
 
     @Column(name = "description")
-    private String description;
+    private final String description;
 
     @Column(name = "price")
-    private BigDecimal price;
+    private final BigDecimal price;
 
     @Column(name = "file_content")
-    private String fileContent;
+    private final String fileContent;
+
+    @SuppressWarnings("unused")
+    private Product() {
+        this(null, null, null, null, null);
+    }
 }

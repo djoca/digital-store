@@ -1,0 +1,24 @@
+.navbar {
+	margin-bottom: 20px;
+}
+
+.navbar-cart {
+	position: relative;
+	display: inline-block;
+	padding: 2px 5px;
+}
+
+.shopping-cart-counter {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	padding: 3px 6px;
+	background-color: red;
+	border-radius: 50%;
+	color: white;
+	font-size: 10px;
+}
+
+.fa-shopping-cart {
+	color: white;
+}

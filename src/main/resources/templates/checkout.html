@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="header :: header" />
+<body>
+	<div th:include="header :: header-bar"></div>
+
+	<div class="container">
+
+	    <form action="/checkout" method="post">
+	        <div class="row">
+	            <div class="col-md">
+	            <p class="border-bottom">Dados do comprador</p>
+	            <div class="form-group">
+	                    <label for="customerName">Nome</label>
+	                    <input id="customerName" name="customerName" class="form-control" type="text" maxlength="120" required="true" value=""/>
+	                    <span class="invalid-feedback"></span>
+	                    <small class="form-text text-muted">Este é o nome utilizado para o seu cadastro na loja</small>
+	                </div>
+	                <div class="form-group">
+	                    <label for="customerEmail">E-mail</label>
+	                    <input id="customerEmail" name="customerEmail" class="form-control" type="email" maxlength="150" required="true" pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$" value=""/>
+	                    <span class="invalid-feedback"></span>
+	                    <small class="form-text text-muted">Certifique-se que o seu e-mail está correto. É por este e-mail que as informações sobre a sua compra serão enviadas.</small>
+	                </div>
+	            </div>
+	            <div class="col-md">
+	                <p class="border-bottom">Dados do cartão</p>
+	                <div class="form-group">
+	                    <label for="cardBrand">Bandeira</label>
+	                    <select id="cardBrand" name="cardBrand" class="form-control" required="true">
+	                        <option></option>
+                            <option value="Visa">Visa</option>
+                            <option value="Mastercard">Mastercard</option>
+	                    </select>
+	                    <span class="invalid-feedback"></span>
+	                    <small class="form-text text-muted">A bandeira é a marca do seu cartão. Atualmente trabalhamos com as bandeiras acima.</small>
+	                </div>
+	                <div class="form-group">
+	                    <label for="cardHolder">Nome</label>
+	                    <input id="cardHolder" name="cardHolder" class="form-control" type="text" maxlength="25" required="true" pattern="^[A-Za-z\s]{0,25}$" value=""/>
+	                    <span class="invalid-feedback"></span>
+	                    <small class="orm-text text-muted">Informe o seu nome exatamente como está impresso no seu cartão.</small>
+	                </div>
+	                <div class="form-group">
+	                    <label for="cardNumber">Número</label>
+	                    <input id="cardNumber" name="cardNumber" class="form-control" type="text" minlength="12" maxlength="19" required="true" pattern="^[0-9]{12,19}$" value=""/>
+	                    <span class="invalid-feedback"></span>
+	                    <small class="orm-text text-muted">Preencha apenas os números do seu cartão, sem espaços ou pontos</small>
+	                </div>
+	                <div class="form-group">
+	                    <label id="cardExpirationLabel" for="cardExpiration">Expiração</label>
+	                    <input id="cardExpirationMonth" name="cardExpirationMonth" class="form-control" type="text" minlength="2" maxlength="2" required="true" pattern="^[0-9]{2}$" value=""/> /
+	                    <input id="cardExpirationYear" name="cardExpirationYear" class="form-control" type="text" minlength="4" maxlength="4" required="true" pattern="^[0-9]{4}$" value=""/>
+	                    <span id="cardExpirationError" class="invalid-feedback"></span>
+	                    <small id="cardExpirationHelpText" class="orm-text text-muted">Informe a expiração no formato mm/aaaa (por exemplo: 09/2021)</small>
+	                </div>
+	                <div class="form-group">
+	                    <label for="cardCvv">CVV</label>
+	                    <input id="cardCvv" name="cardCvv" class="form-control ${cardCvvError" type="text" minlength="3" maxlength="4" required="true" pattern="^[0-9]{3,4}$" value=""/>
+	                    <span class="invalid-feedback"></span>
+	                    <small class="orm-text text-muted">CVV é o código de segurança do seu cartão. São os 3 ou 4 números que podem estar na traseira ou na frente do seu cartão.</small>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="row justify-content-center">
+	            <button type="submit" class="btn btn-primary">Comprar</button>
+	        </div>
+	    </form>
+	</div>
+</body>
+</html>

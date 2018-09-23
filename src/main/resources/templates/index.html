@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="header :: header"></head>
+<body>
+	<div th:include="header :: header-bar"></div>
+
+	<div class="container">
+		<div class="card-deck">
+			<div class="card col-sm-6 col-md-4 card-responsive product-card">
+				<div class="card-body">
+					<h5 class="card-title">Immigrant Song</h5>
+					<p class="card-text">Música do Led Zeppelin</p>
+				</div>
+				<div class="card-footer">
+					<div class="row align-items-center">
+						<div class="col-6">R$ 9,99</div>
+						<div class="col-6" style="text-align: right">
+							<a href="/shopping-cart" class="btn btn-primary" role="button">Comprar</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

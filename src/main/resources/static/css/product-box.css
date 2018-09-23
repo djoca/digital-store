@@ -1,0 +1,29 @@
+@media ( max-width : 768px) {
+    .card-responsive {
+        flex: none !important;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+        margin-bottom: 15px !important;
+        max-width: 100% !important;
+    }
+}
+
+@media ( min-width : 768px) {
+    .card-responsive {
+        flex: none !important;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+        margin-bottom: 15px !important;
+        max-width: 45% !important;
+    }
+}
+
+@media ( min-width : 992px) {
+    .card-responsive {
+        flex: none !important;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+        margin-bottom: 15px !important;
+        max-width: 30% !important;
+    }
+}

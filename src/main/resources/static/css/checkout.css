@@ -1,0 +1,22 @@
+#cardExpirationLabel {
+	display: block;
+}
+
+#cardExpirationMonth {
+	width: 3em;
+	display: inline;
+}
+
+#cardExpirationYear {
+	width: 5em;
+	display: inline;
+}
+
+#cardExpirationHelpText {
+	display: block;
+	margin-top: 0.3em;
+}
+
+#cardCvv {
+	width: 5em;
+}

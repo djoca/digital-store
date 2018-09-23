@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="header :: header"></head>
+<body>
+	<div th:include="header :: header-bar"></div>
+
+	<div class="container">
+		<h3>Compra efetivada!</h3>
+		<p>Parabéns pela sua aquisição!</p>
+		<p>As informações abaixo resumem a sua compra. Guarde estas informações em um local seguro.</p>
+		<div class="card card-body bg-light">
+			<p class="card-text">Immigrant Song</p>
+			<p class="card-text">
+				Link para download: <a href="/download/123">http://localhost:8080/download/123</a>
+			</p>
+		</div>
+		<br />
+		<p>Você também receberá estas informações no e-mail joses.jr@gmail.com.</p>
+	</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="header :: header" />
+<body>
+	<div th:include="header :: header-bar"></div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-8">
+				<div class="card card-list ">
+					<div>
+						<div class="card-body">
+							<div class="row align-items-top">
+								<div class="col-sm-8">
+									<span><strong>Immigrant Song</strong></span>
+								</div>
+								<div class="col-sm-2">
+									<span>R$ 9,99</span>
+								</div>
+								<div class="col-sm-2 text-right">
+									<i class="fas fa-ban"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-body">
+					<a href="/">Continuar comprando</a>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="card card-list">
+					<div>
+						<div class="card-body ">
+							<div class="row" style="margin-bottom: 10px">
+								<div class="col-6">
+									<span><strong>Total</strong></span>
+								</div>
+								<div class="col-6 text-right">
+									<span>R$ 9,99</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12 text-center">
+									<a class="btn btn-primary" href="/checkout" role="button">Prosseguir com pagamento</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</body>
+</html>

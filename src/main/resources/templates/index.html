@@ -6,14 +6,14 @@
 
 	<div class="container">
 		<div class="card-deck">
-			<div class="card col-sm-6 col-md-4 card-responsive product-card">
+			<div th:each="product : ${products}" class="card col-sm-6 col-md-4 card-responsive product-card">
 				<div class="card-body">
-					<h5 class="card-title">Immigrant Song</h5>
-					<p class="card-text">Música do Led Zeppelin</p>
+					<h5 class="card-title" th:text="${product.name}">Immigrant Song</h5>
+					<p class="card-text" th:text="${product.description}">Música do Led Zeppelin</p>
 				</div>
 				<div class="card-footer">
 					<div class="row align-items-center">
-						<div class="col-6">R$ 9,99</div>
+						<div class="col-6" th:text="'R$ ' + ${#numbers.formatDecimal(product.price,1,2,'COMMA')}">R$ 9,99</div>
 						<div class="col-6" style="text-align: right">
 							<a href="/shopping-cart" class="btn btn-primary" role="button">Comprar</a>
 						</div>

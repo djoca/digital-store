@@ -4,6 +4,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +33,10 @@ public class DigitalStoreControllerTest {
 
     @Test
     public void index() throws Exception {
-        performGet("/", "index");
+        final MvcResult result = performGet("/", "index");
+        final Map<String, Object> model = result.getModelAndView().getModel();
+        Assert.assertNotNull(model.get("products"));
+        Assert.assertTrue(model.get("products") instanceof java.util.List);
     }
 
     @Test
@@ -56,7 +61,7 @@ public class DigitalStoreControllerTest {
 
     /**
      * Perform a get request and assert the HttpStatus is 200 and the view is the expected one
-     * 
+     *
      * @param uri
      *            the uri this method will request
      * @param expectedView
@@ -73,7 +78,7 @@ public class DigitalStoreControllerTest {
 
     /**
      * Perform a post request and assert the HttpStatus is 301 and the view is correctly redirected
-     * 
+     *
      * @param uri
      *            the uri this method will request
      * @param expectedRedirect

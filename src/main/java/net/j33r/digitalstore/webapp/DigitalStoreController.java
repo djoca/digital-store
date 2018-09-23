@@ -1,9 +1,15 @@
 package net.j33r.digitalstore.webapp;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import lombok.AllArgsConstructor;
+import net.j33r.digitalstore.domain.DigitalStoreApplicationService;
+import net.j33r.digitalstore.domain.store.Product;
 
 /**
  * Controller class for the Digital Store web application
@@ -11,7 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @author joses
  */
 @Controller
+@AllArgsConstructor
 public class DigitalStoreController {
+
+    private final DigitalStoreApplicationService applicationService;
 
     /**
      * Renders the index page
@@ -21,6 +30,8 @@ public class DigitalStoreController {
      */
     @GetMapping("/")
     public String index(final Model model) {
+        final List<Product> products = applicationService.retrieveProducts();
+        model.addAttribute("products", products);
         return "index";
     }
 

@@ -4,6 +4,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -17,6 +19,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
+
+import net.j33r.digitalstore.domain.store.Product;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -56,7 +60,26 @@ public class DigitalStoreControllerTest {
 
     @Test
     public void shoppingCart() throws Exception {
-        performGet("/shopping-cart", "shopping-cart");
+        final MvcResult result = performGet("/shopping-cart", "shopping-cart");
+        final Map<String, Object> model = result.getModelAndView().getModel();
+
+        @SuppressWarnings("unchecked")
+        final List<Product> products = (List<Product>) model.get("products");
+        final BigDecimal total = (BigDecimal) model.get("cartTotal");
+        Assert.assertNotNull(products);
+        Assert.assertNotNull(total);
+        Assert.assertEquals(total,
+                products.stream().map(p -> p.getPrice()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b)));
+    }
+
+    @Test
+    public void addToCart() throws Exception {
+        performPost("/shopping-cart/add/2", "/shopping-cart");
+    }
+
+    @Test
+    public void removeFromCart() throws Exception {
+        performPost("/shopping-cart/remove/2", "/shopping-cart");
     }
 
     /**
@@ -92,4 +115,5 @@ public class DigitalStoreControllerTest {
         Assert.assertEquals(expectedRedirect, result.getResponse().getRedirectedUrl());
         return result;
     }
+
 }

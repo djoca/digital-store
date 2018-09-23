@@ -1,6 +1,7 @@
 package net.j33r.digitalstore.domain;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -26,5 +27,9 @@ public class DigitalStoreApplicationService {
      */
     public List<Product> retrieveProducts() {
         return storeService.retrieveProducts();
+    }
+
+    public List<Product> retrieveProductsFromList(final Set<Long> ids) {
+        return storeService.retrieveProductsFromList(ids);
     }
 }

@@ -8,18 +8,25 @@
 		<div class="row">
 			<div class="col-sm-8">
 				<div class="card card-list ">
-					<div>
+					<div th:if="${#lists.isEmpty(products)}">
 						<div class="card-body">
-							<div class="row align-items-top">
-								<div class="col-sm-8">
-									<span><strong>Immigrant Song</strong></span>
-								</div>
-								<div class="col-sm-2">
-									<span>R$ 9,99</span>
-								</div>
-								<div class="col-sm-2 text-right">
-									<i class="fas fa-ban"></i>
-								</div>
+							<span th:text="'Nenhum produto no carrinho'"></span>
+						</div>
+					</div>
+					<div th:each="product : ${products}" class="card-body">
+						<div class="row align-items-top">
+							<div class="col-sm-8">
+								<span><strong th:text="${product.name}">Immigrant Song</strong></span>
+							</div>
+							<div class="col-sm-3">
+								<span th:text="'R$ ' + ${#numbers.formatDecimal(product.price,1,2,'COMMA')}">R$ 9,99</span>
+							</div>
+							<div class="col-sm-1 text-right">
+								<form action="/shopping-cart" th:action="@{'/shopping-cart/remove/' + ${product.id}}" method="post">
+									<button type="submit" class="button-cart-remove">
+										<i class="fas fa-ban"></i>
+									</button>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -37,7 +44,7 @@
 									<span><strong>Total</strong></span>
 								</div>
 								<div class="col-6 text-right">
-									<span>R$ 9,99</span>
+									<span th:text="${'R$ '+ cartTotal}">R$ 9,99</span>
 								</div>
 							</div>
 							<div class="row">

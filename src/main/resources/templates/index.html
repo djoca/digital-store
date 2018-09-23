@@ -15,7 +15,7 @@
 					<div class="row align-items-center">
 						<div class="col-6" th:text="'R$ ' + ${#numbers.formatDecimal(product.price,1,2,'COMMA')}">R$ 9,99</div>
 						<div class="col-6" style="text-align: right">
-							<a href="/shopping-cart" class="btn btn-primary" role="button">Comprar</a>
+							<form action="/shopping-cart" th:action="@{'/shopping-cart/add/' + ${product.id}}" method="post"><input type="submit" class="btn btn-primary" role="button" value="Comprar"/></form>
 						</div>
 					</div>
 				</div>

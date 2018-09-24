@@ -12,8 +12,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- * The {@link CheckoutFormValidator} is the {@link Validator} used on the
- * {@link CheckoutForm} data validation.
+ * The {@link CheckoutFormValidator} is the {@link Validator} used on the {@link CheckoutForm} data validation.
  *
  * @author joses
  *
@@ -69,7 +68,7 @@ public class CheckoutFormValidator implements Validator {
         }
 
         if (customerEmail.length() > 150) {
-            errors.rejectValue("customerName", null, "E-mail muito longo.");
+            errors.rejectValue("customerEmail", null, "E-mail muito longo.");
         }
 
         final Pattern pattern = Pattern.compile("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b");

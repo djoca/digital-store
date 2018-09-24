@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,16 +53,74 @@ public class DigitalStoreControllerTest {
 
     @Test
     public void postCheckout() throws Exception {
-        final MvcResult result = peformCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER",
+        final MvcResult result = performCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER",
                 "1425262396826452", "02", "2020", "124");
-        Assert.assertTrue(result.getResponse().getRedirectedUrl().startsWith("/purchase-done"));
+        final String redirectedUrl = result.getResponse().getRedirectedUrl();
+        Assert.assertTrue(redirectedUrl.startsWith("/purchase-done"));
+
+        performGet(redirectedUrl, "purchase-done");
     }
 
     @Test
-    public void postInvalidCheckout() throws Exception {
-        final MvcResult result = peformCheckoutPost(null, "luke@starwars.com", "Visa", "LUKE SKYWALKER",
+    public void checkoutValidator() throws Exception {
+        performInvalidCheckoutPost(null, "luke@starwars.com", "Visa", "LUKE SKYWALKER", "1425262396826452", "02",
+                "2020", "124");
+        performInvalidCheckoutPost(StringUtils.repeat("A", 121), "luke@starwars.com", "Visa", "LUKE SKYWALKER",
                 "1425262396826452", "02", "2020", "124");
+        performInvalidCheckoutPost("Luke Skywalker", null, "Visa", "LUKE SKYWALKER", "1425262396826452", "02", "2020",
+                "124");
+        performInvalidCheckoutPost("Luke Skywalker", StringUtils.repeat("A", 151), "Visa", "LUKE SKYWALKER",
+                "1425262396826452", "02", "2020", "124");
+        performInvalidCheckoutPost("Luke Skywalker", "abc", "Visa", "LUKE SKYWALKER", "1425262396826452", "02", "2020",
+                "124");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", null, "LUKE SKYWALKER", "1425262396826452",
+                "02", "2020", "124");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", null, "1425262396826452", "02",
+                "2020", "124");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", StringUtils.repeat("A", 26),
+                "1425262396826452", "02", "2020", "124");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER", null, "02", "2020",
+                "124");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER", "012", "02", "2020",
+                "124");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER", "-1425262396826452",
+                "02", "2020", "124");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER", "ABC", "02", "2020",
+                "124");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER",
+                StringUtils.repeat("1", 11), "02", "2020", "124");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER",
+                StringUtils.repeat("1", 20), "02", "2020", "124");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER", "1425262396826452",
+                null, "2020", "124");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER", "1425262396826452",
+                "02", null, "124");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER", "1425262396826452",
+                "-02", "2020", "124");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER", "1425262396826452",
+                "13", "2020", "124");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER", "1425262396826452",
+                "02", "1999", "124");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER", "1425262396826452",
+                "A", "1999", "124");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER", "1425262396826452",
+                "02", "A", "124");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER", "1425262396826452",
+                "02", "2020", null);
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER", "1425262396826452",
+                "02", "2020", "1");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER", "1425262396826452",
+                "02", "2020", "12345");
+        performInvalidCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER", "1425262396826452",
+                "02", "2020", "ABC");
+    }
+
+    @Test
+    public void postUnauthorizedCheckout() throws Exception {
+        final MvcResult result = performCheckoutPost("Luke Skywalker", "luke@starwars.com", "MasterCard",
+                "LUKE SKYWALKER", "1425262396826452", "02", "2020", "1234");
         Assert.assertEquals("checkout", result.getModelAndView().getViewName());
+        Assert.assertNotNull(result.getModelAndView().getModel().get("error"));
     }
 
     @Test
@@ -89,8 +148,7 @@ public class DigitalStoreControllerTest {
     }
 
     /**
-     * Perform a get request and assert the HttpStatus is 200 and the view is the
-     * expected one
+     * Perform a get request and assert the HttpStatus is 200 and the view is the expected one
      *
      * @param uri
      *            the uri this method will request
@@ -107,8 +165,7 @@ public class DigitalStoreControllerTest {
     }
 
     /**
-     * Perform a post request and assert the HttpStatus is 301 and the view is
-     * correctly redirected
+     * Perform a post request and assert the HttpStatus is 301 and the view is correctly redirected
      *
      * @param uri
      *            the uri this method will request
@@ -130,8 +187,9 @@ public class DigitalStoreControllerTest {
      * @return
      * @throws Exception
      */
-    private MvcResult peformCheckoutPost(final String name, final String email, final String brand, final String holder,
-            final String number, final String month, final String year, final String cvv) throws Exception {
+    private MvcResult performCheckoutPost(final String name, final String email, final String brand,
+            final String holder, final String number, final String month, final String year, final String cvv)
+            throws Exception {
         final ResultActions action = mockMvc
                 .perform(post("/checkout").param("customerName", name).param("customerEmail", email)
                         .param("cardBrand", brand).param("cardHolder", holder).param("cardNumber", number)
@@ -140,4 +198,19 @@ public class DigitalStoreControllerTest {
         return action.andReturn();
     }
 
+    /**
+     * Perform an invalid post with the specified parameters. This is the same as
+     * {@link DigitalStoreControllerTest#performCheckoutPost(String, String, String, String, String, String, String, String)}
+     * but verifies that sever returns to the original page.
+     *
+     * @return
+     * @throws Exception
+     */
+    private MvcResult performInvalidCheckoutPost(final String name, final String email, final String brand,
+            final String holder, final String number, final String month, final String year, final String cvv)
+            throws Exception {
+        final MvcResult result = performCheckoutPost(name, email, brand, holder, number, month, year, cvv);
+        Assert.assertEquals("checkout", result.getModelAndView().getViewName());
+        return result;
+    }
 }

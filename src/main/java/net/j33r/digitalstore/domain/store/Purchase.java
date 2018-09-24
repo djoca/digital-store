@@ -14,10 +14,15 @@ import javax.persistence.Table;
 
 import lombok.Getter;
 
+/**
+ * This class represents a purchase registered after a successful payment.
+ *
+ * @author joses
+ */
 @Getter
 @Entity
 @Table(name = "purchase")
-class Purchase {
+public class Purchase {
 
     @Id
     @Column(name = "id")
@@ -31,6 +36,11 @@ class Purchase {
     @ManyToMany
     @JoinTable(name = "purchase_product", joinColumns = @JoinColumn(name = "purchase_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
     private final List<Product> products;
+
+    @SuppressWarnings("unused")
+    private Purchase() {
+        this(null, null, null);
+    }
 
     Purchase(final String customerName, final String customerEmail, final List<Product> products) {
         this.id = null;

@@ -22,6 +22,7 @@ import net.j33r.digitalstore.domain.store.CreditCard;
 import net.j33r.digitalstore.domain.store.Customer;
 import net.j33r.digitalstore.domain.store.PaymentGatewayException;
 import net.j33r.digitalstore.domain.store.Product;
+import net.j33r.digitalstore.domain.store.Purchase;
 
 /**
  * Controller class for the Digital Store web application
@@ -130,10 +131,10 @@ public class DigitalStoreController {
                 checkoutForm.getCardHolder(), checkoutForm.getExpirationDate(), checkoutForm.getCardCvv());
 
         try {
-            applicationService.checkout(customer, creditCard, cart.getItems());
+            final Long purchaseId = applicationService.checkout(customer, creditCard, cart.getItems());
             cart.clear();
 
-            return "redirect:/purchase-done";
+            return "redirect:/purchase-done/" + purchaseId;
         } catch (final PaymentGatewayException e) {
             model.addAttribute("error", e.getMessage());
             return "checkout";
@@ -145,8 +146,10 @@ public class DigitalStoreController {
      *
      * @return the purchase done page
      */
-    @GetMapping("/purchase-done")
-    public String purchaseDone() {
+    @GetMapping("/purchase-done/{purchaseId}")
+    public String purchaseDone(final Model model, @PathVariable final Long purchaseId) {
+        final Purchase purchase = applicationService.retrievePurchase(purchaseId);
+        model.addAttribute("products", purchase.getProducts());
         return "purchase-done";
     }
 

@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.j33r</groupId>
-	<artifactId>digitalstore</artifactId>
+	<artifactId>digital-store</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
 
@@ -69,7 +69,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<executable>true</executable>
-					<jvmArguments>-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8787</jvmArguments>
+					<jvmArguments>-Dfile.encoding=UTF-8 -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8787</jvmArguments>
 				</configuration>
 			</plugin>
 		</plugins>

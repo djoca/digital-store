@@ -10,6 +10,7 @@ import net.j33r.digitalstore.domain.store.CreditCard;
 import net.j33r.digitalstore.domain.store.Customer;
 import net.j33r.digitalstore.domain.store.PaymentGatewayException;
 import net.j33r.digitalstore.domain.store.Product;
+import net.j33r.digitalstore.domain.store.Purchase;
 import net.j33r.digitalstore.domain.store.StoreService;
 
 /**
@@ -32,12 +33,40 @@ public class DigitalStoreApplicationService {
         return storeService.retrieveProducts();
     }
 
+    /**
+     * Retrieve products by a set of ids
+     *
+     * @param ids
+     *            the id of the products to be retrieved
+     * @return a List of Product
+     */
     public List<Product> retrieveProductsFromList(final Set<Long> ids) {
         return storeService.retrieveProductsFromList(ids);
     }
 
-    public void checkout(final Customer customer, final CreditCard creditCard, final Set<Long> ids)
+    /**
+     * Perform the purchase checkout.
+     *
+     * @param ids
+     *            the product ids
+     * @param customer
+     *            the customer information
+     * @param creditCard
+     *            the credit card information
+     */
+    public Long checkout(final Customer customer, final CreditCard creditCard, final Set<Long> ids)
             throws PaymentGatewayException {
-        storeService.checkout(customer, creditCard, ids);
+        return storeService.checkout(customer, creditCard, ids);
+    }
+
+    /**
+     * Retrieve a purchase.
+     *
+     * @param id
+     *            the purchase id
+     * @return a Purchase
+     */
+    public Purchase retrievePurchase(final Long purchaseId) {
+        return storeService.retrievePurchase(purchaseId);
     }
 }

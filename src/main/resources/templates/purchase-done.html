@@ -7,15 +7,15 @@
 	<div class="container">
 		<h3>Compra efetivada!</h3>
 		<p>Parabéns pela sua aquisição!</p>
-		<p>As informações abaixo resumem a sua compra. Guarde estas informações em um local seguro.</p>
+		<p>Você pode baixar os produtos adquiridos nos links abaixo:</p>
 		<div class="card card-body bg-light">
-			<p class="card-text">Immigrant Song</p>
-			<p class="card-text">
-				Link para download: <a href="/download/123">http://localhost:8080/download/123</a>
-			</p>
+			<div th:each="product : ${products}">
+				<p class="card-text">
+					<a href="/download/123" th:href="${'/download/' + product.id}" th:text="${product.name}">Immigrant Song</a>
+				</p>
+			</div>
 		</div>
 		<br />
-		<p>Você também receberá estas informações no e-mail joses.jr@gmail.com.</p>
 	</div>
 </body>
 </html>

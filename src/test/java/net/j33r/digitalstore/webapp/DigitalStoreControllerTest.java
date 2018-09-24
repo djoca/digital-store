@@ -53,7 +53,7 @@ public class DigitalStoreControllerTest {
     public void postCheckout() throws Exception {
         final MvcResult result = peformCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER",
                 "1425262396826452", "02", "2020", "124");
-        Assert.assertEquals("/purchase-done", result.getResponse().getRedirectedUrl());
+        Assert.assertTrue(result.getResponse().getRedirectedUrl().startsWith("/purchase-done"));
     }
 
     @Test
@@ -61,11 +61,6 @@ public class DigitalStoreControllerTest {
         final MvcResult result = peformCheckoutPost(null, "luke@starwars.com", "Visa", "LUKE SKYWALKER",
                 "1425262396826452", "02", "2020", "124");
         Assert.assertEquals("checkout", result.getModelAndView().getViewName());
-    }
-
-    @Test
-    public void purchaseDone() throws Exception {
-        performGet("/purchase-done", "purchase-done");
     }
 
     @Test
@@ -93,7 +88,8 @@ public class DigitalStoreControllerTest {
     }
 
     /**
-     * Perform a get request and assert the HttpStatus is 200 and the view is the expected one
+     * Perform a get request and assert the HttpStatus is 200 and the view is the
+     * expected one
      *
      * @param uri
      *            the uri this method will request
@@ -110,7 +106,8 @@ public class DigitalStoreControllerTest {
     }
 
     /**
-     * Perform a post request and assert the HttpStatus is 301 and the view is correctly redirected
+     * Perform a post request and assert the HttpStatus is 301 and the view is
+     * correctly redirected
      *
      * @param uri
      *            the uri this method will request

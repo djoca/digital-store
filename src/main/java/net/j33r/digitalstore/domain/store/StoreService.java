@@ -58,7 +58,7 @@ public class StoreService {
      * @param creditCard
      *            the credit card information
      */
-    public void checkout(final Customer customer, final CreditCard creditCard, final Set<Long> ids)
+    public Long checkout(final Customer customer, final CreditCard creditCard, final Set<Long> ids)
             throws PaymentGatewayException {
         final List<Product> products = retrieveProductsFromList(ids);
         final Purchase purchase = new Purchase(customer.getName(), customer.getEmail(), products);
@@ -68,7 +68,18 @@ public class StoreService {
         final PaymentGateway gateway = paymentGatewayFactory.getPaymentGateway(creditCard.getBrand());
         gateway.checkout(creditCard, amount);
         purchaseRepository.save(purchase);
-        System.out.println(purchase.getId());
+        return purchase.getId();
+    }
+
+    /**
+     * Retrieve a purchase.
+     *
+     * @param id
+     *            the purchase id
+     * @return a Purchase
+     */
+    public Purchase retrievePurchase(final Long id) {
+        return purchaseRepository.findOne(id);
     }
 
 }

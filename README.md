@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/djoca/digital-store.svg?branch=master)](https://travis-ci.org/djoca/digital-store)
+
 # Digital Store
 
 This is a simple digital store made with Spring Boot.

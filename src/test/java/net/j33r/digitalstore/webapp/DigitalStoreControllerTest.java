@@ -26,6 +26,7 @@ import net.j33r.digitalstore.domain.store.Product;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class DigitalStoreControllerTest {
+
     protected MockMvc mockMvc;
 
     @Autowired

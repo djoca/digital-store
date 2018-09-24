@@ -1,5 +1,7 @@
 package net.j33r.digitalstore.domain;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +25,17 @@ import net.j33r.digitalstore.domain.store.StoreService;
 public class DigitalStoreApplicationService {
 
     private final StoreService storeService;
+
+    /**
+     * Returns a product.
+     *
+     * @param productId
+     *            the product id
+     * @return a Product
+     */
+    public Product retrieveProduct(final Long id) {
+        return storeService.retrieveProduct(id);
+    }
 
     /**
      * Retrieve all products from the store
@@ -68,5 +81,9 @@ public class DigitalStoreApplicationService {
      */
     public Purchase retrievePurchase(final Long purchaseId) {
         return storeService.retrievePurchase(purchaseId);
+    }
+
+    public void download(final OutputStream out, final Long productId) throws IOException {
+        storeService.download(out, productId);
     }
 }

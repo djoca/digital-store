@@ -40,8 +40,11 @@ public class Product {
     @Column(name = "file_content")
     private final String fileContent;
 
+    @Column(name = "file_size")
+    private final Integer fileSize;
+
     @SuppressWarnings("unused")
     private Product() {
-        this(null, null, null, null, null);
+        this(null, null, null, null, null, null);
     }
 }

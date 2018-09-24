@@ -4,6 +4,7 @@ create table product (
   description varchar(2000),
   price numeric(10,2),
   file_content varchar(500),
+  file_size numeric,
   primary key (id)
 );
 

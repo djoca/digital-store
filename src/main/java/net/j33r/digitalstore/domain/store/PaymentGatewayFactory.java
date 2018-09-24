@@ -5,6 +5,12 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * The {@link PaymentGatewayFactory} is a factory of PaymentGateway objects.
+ *
+ * @author joses
+ *
+ */
 @Component
 public class PaymentGatewayFactory {
 
@@ -16,7 +22,13 @@ public class PaymentGatewayFactory {
         gateways.put("MasterCard", masterCardPaymentGateway);
     }
 
-    public PaymentGateway getPaymentGateway(final String brand) {
-        return gateways.get(brand);
+    /**
+     * Returns a {@link PaymentGateway} for the specified credit card provider
+     *
+     * @param provider
+     * @return a {@link PaymentGateway}
+     */
+    public PaymentGateway getPaymentGateway(final String provider) {
+        return gateways.get(provider);
     }
 }

@@ -1,5 +1,7 @@
 package net.j33r.digitalstore.domain.store;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +26,21 @@ public class StoreService {
 
     private final PaymentGatewayFactory paymentGatewayFactory;
 
+    private final FileRepository fileRepository;
+
     /**
-     * Return all the products from the store.
+     * Returns a product.
+     *
+     * @param productId
+     *            the product id
+     * @return a Product
+     */
+    public Product retrieveProduct(final Long id) {
+        return productRepository.findOne(id);
+    }
+
+    /**
+     * Returns all the products from the store.
      *
      * @return a List of Product
      */
@@ -34,7 +49,7 @@ public class StoreService {
     }
 
     /**
-     * Return a List of Product with the specified ids
+     * Returns a List of Product with the specified ids
      *
      * @param ids
      *            the list of ids to retrieve
@@ -49,7 +64,7 @@ public class StoreService {
     }
 
     /**
-     * Perform the purchase checkout.
+     * Performs the purchase checkout.
      *
      * @param ids
      *            the product ids
@@ -72,7 +87,7 @@ public class StoreService {
     }
 
     /**
-     * Retrieve a purchase.
+     * Retrieves a purchase.
      *
      * @param id
      *            the purchase id
@@ -80,6 +95,20 @@ public class StoreService {
      */
     public Purchase retrievePurchase(final Long id) {
         return purchaseRepository.findOne(id);
+    }
+
+    /**
+     * Download the product file.
+     * 
+     * @param out
+     *            the OutputStream where the file will be sent.
+     * @param productId
+     *            the product id
+     * @throws IOException
+     */
+    public void download(final OutputStream out, final Long productId) throws IOException {
+        final Product product = retrieveProduct(productId);
+        fileRepository.read(out, product.getFileContent());
     }
 
 }

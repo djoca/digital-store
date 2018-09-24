@@ -11,6 +11,13 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+/**
+ * The {@link CheckoutFormValidator} is the {@link Validator} used on the
+ * {@link CheckoutForm} data validation.
+ *
+ * @author joses
+ *
+ */
 @Component
 public class CheckoutFormValidator implements Validator {
 

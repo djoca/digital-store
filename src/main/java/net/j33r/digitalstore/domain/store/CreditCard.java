@@ -5,6 +5,13 @@ import java.time.YearMonth;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * The {@link CreditCard} class holds the credit card information during the
+ * checkout process.
+ *
+ * @author joses
+ *
+ */
 @AllArgsConstructor
 @Getter
 public class CreditCard {

@@ -8,6 +8,12 @@ import net.j33r.digitalstore.domain.store.CreditCard;
 import net.j33r.digitalstore.domain.store.PaymentGateway;
 import net.j33r.digitalstore.domain.store.PaymentGatewayException;
 
+/**
+ * The {@link PaymentGateway} is the class used for Visa credit card processing.
+ *
+ * @author joses
+ *
+ */
 @Component
 public class VisaPaymentGateway implements PaymentGateway {
 

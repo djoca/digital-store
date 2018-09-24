@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/djoca/digital-store.svg?branch=master)](https://travis-ci.org/djoca/digital-store)
+[![Coverage Status](https://coveralls.io/repos/github/djoca/digital-store/badge.svg?branch=master)](https://coveralls.io/github/djoca/digital-store?branch=master)
+
 
 # Digital Store
 

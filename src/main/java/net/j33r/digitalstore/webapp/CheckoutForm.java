@@ -1,11 +1,13 @@
 package net.j33r.digitalstore.webapp;
 
+import java.time.YearMonth;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-public class CheckoutForm {
+class CheckoutForm {
 
     private String customerName;
 
@@ -22,4 +24,8 @@ public class CheckoutForm {
     private String cardCvv;
 
     private String cardBrand;
+
+    YearMonth getExpirationDate() {
+        return YearMonth.of(Integer.parseInt(cardExpirationYear), Integer.parseInt(cardExpirationMonth));
+    }
 }

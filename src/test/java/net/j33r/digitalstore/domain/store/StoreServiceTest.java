@@ -20,6 +20,12 @@ public class StoreServiceTest {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private PurchaseRepository purchaseRepository;
+
+    @Autowired
+    private PaymentGatewayFactory paymentGatewayFactory;
+
     private StoreService storeService;
 
     @Before
@@ -32,7 +38,7 @@ public class StoreServiceTest {
         final Product p2 = new Product(2L, "A program", "The description", new BigDecimal("65.99"), "/tmp/program.zip");
         productRepository.save(p2);
 
-        storeService = new StoreService(productRepository);
+        storeService = new StoreService(productRepository, purchaseRepository, paymentGatewayFactory);
     }
 
     @Test

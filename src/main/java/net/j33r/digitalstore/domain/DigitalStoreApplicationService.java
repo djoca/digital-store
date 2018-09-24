@@ -6,6 +6,9 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
+import net.j33r.digitalstore.domain.store.CreditCard;
+import net.j33r.digitalstore.domain.store.Customer;
+import net.j33r.digitalstore.domain.store.PaymentGatewayException;
 import net.j33r.digitalstore.domain.store.Product;
 import net.j33r.digitalstore.domain.store.StoreService;
 
@@ -31,5 +34,10 @@ public class DigitalStoreApplicationService {
 
     public List<Product> retrieveProductsFromList(final Set<Long> ids) {
         return storeService.retrieveProductsFromList(ids);
+    }
+
+    public void checkout(final Customer customer, final CreditCard creditCard, final Set<Long> ids)
+            throws PaymentGatewayException {
+        storeService.checkout(customer, creditCard, ids);
     }
 }

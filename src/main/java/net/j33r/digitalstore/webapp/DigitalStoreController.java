@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.AllArgsConstructor;
 import net.j33r.digitalstore.domain.DigitalStoreApplicationService;
+import net.j33r.digitalstore.domain.store.CreditCard;
+import net.j33r.digitalstore.domain.store.Customer;
+import net.j33r.digitalstore.domain.store.PaymentGatewayException;
 import net.j33r.digitalstore.domain.store.Product;
 
 /**
@@ -122,7 +125,19 @@ public class DigitalStoreController {
             return "checkout";
         }
 
-        return "redirect:/purchase-done";
+        final Customer customer = new Customer(checkoutForm.getCustomerName(), checkoutForm.getCustomerEmail());
+        final CreditCard creditCard = new CreditCard(checkoutForm.getCardNumber(), checkoutForm.getCardBrand(),
+                checkoutForm.getCardHolder(), checkoutForm.getExpirationDate(), checkoutForm.getCardCvv());
+
+        try {
+            applicationService.checkout(customer, creditCard, cart.getItems());
+            cart.clear();
+
+            return "redirect:/purchase-done";
+        } catch (final PaymentGatewayException e) {
+            model.addAttribute("error", e.getMessage());
+            return "checkout";
+        }
     }
 
     /**

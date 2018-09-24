@@ -7,7 +7,7 @@ import lombok.Getter;
 
 /**
  * This class holds the items for the store shopping cart. It must be used in a session scope.
- * 
+ *
  * @author joses
  *
  */
@@ -30,6 +30,10 @@ class Cart {
 
     void remove(final Long id) {
         items.remove(id);
+    }
+
+    void clear() {
+        items.clear();
     }
 
 }

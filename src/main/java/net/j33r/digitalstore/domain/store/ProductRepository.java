@@ -11,7 +11,7 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author joses
  */
-public interface ProductRepository extends CrudRepository<Product, Long> {
+interface ProductRepository extends CrudRepository<Product, Long> {
 
     @Query("select p from #{#entityName} p order by p.name")
     public List<Product> findProducts();

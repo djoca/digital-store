@@ -24,6 +24,7 @@ import lombok.Getter;
 public class Product {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private final Long id;
 

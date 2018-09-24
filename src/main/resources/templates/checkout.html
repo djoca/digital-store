@@ -5,6 +5,13 @@
 	<div th:include="header :: header-bar"></div>
 
 	<div class="container">
+	    <div th:if="${error != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+	        <h4>Erro no processamento</h4>
+	        <span th:text="${error}"></span>
+	        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	            <span aria-hidden="true">&times;</span>
+	        </button>
+	    </div>	
 
 	    <form action="/checkout" method="post">
 	        <div class="row">
@@ -30,7 +37,7 @@
 	                    <select id="cardBrand" name="cardBrand" th:class="${'form-control ' + (cardBrandError != null ? 'is-invalid' : '')}" >
 	                        <option></option>
                             <option value="Visa" th:selected="${checkoutForm.cardBrand == 'Visa'}">Visa</option>
-                            <option value="Mastercard" th:selected="${checkoutForm.cardBrand == 'Mastercard'}">Mastercard</option>
+                            <option value="MasterCard" th:selected="${checkoutForm.cardBrand == 'MasterCard'}">MasterCard</option>
 	                    </select>
 	                    <span class="invalid-feedback" th:text="${cardBrandError}"></span>
 	                    <small class="form-text text-muted">A bandeira é a marca do seu cartão. Atualmente trabalhamos com as bandeiras acima.</small>

@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.context.WebApplicationContext;
 
 import net.j33r.digitalstore.domain.store.Product;
@@ -50,7 +51,16 @@ public class DigitalStoreControllerTest {
 
     @Test
     public void postCheckout() throws Exception {
-        performPost("/checkout", "/purchase-done");
+        final MvcResult result = peformCheckoutPost("Luke Skywalker", "luke@starwars.com", "Visa", "LUKE SKYWALKER",
+                "1425262396826452", "02", "2020", "124");
+        Assert.assertEquals("/purchase-done", result.getResponse().getRedirectedUrl());
+    }
+
+    @Test
+    public void postInvalidCheckout() throws Exception {
+        final MvcResult result = peformCheckoutPost(null, "luke@starwars.com", "Visa", "LUKE SKYWALKER",
+                "1425262396826452", "02", "2020", "124");
+        Assert.assertEquals("checkout", result.getModelAndView().getViewName());
     }
 
     @Test
@@ -114,6 +124,22 @@ public class DigitalStoreControllerTest {
         Assert.assertEquals(HttpStatus.FOUND.value(), result.getResponse().getStatus());
         Assert.assertEquals(expectedRedirect, result.getResponse().getRedirectedUrl());
         return result;
+    }
+
+    /**
+     * Perform a post with the specified parameters
+     *
+     * @return
+     * @throws Exception
+     */
+    private MvcResult peformCheckoutPost(final String name, final String email, final String brand, final String holder,
+            final String number, final String month, final String year, final String cvv) throws Exception {
+        final ResultActions action = mockMvc
+                .perform(post("/checkout").param("customerName", name).param("customerEmail", email)
+                        .param("cardBrand", brand).param("cardHolder", holder).param("cardNumber", number)
+                        .param("cardExpirationMonth", month).param("cardExpirationYear", year).param("cardCvv", cvv));
+
+        return action.andReturn();
     }
 
 }

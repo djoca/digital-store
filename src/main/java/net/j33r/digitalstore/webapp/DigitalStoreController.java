@@ -3,9 +3,15 @@ package net.j33r.digitalstore.webapp;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +31,14 @@ public class DigitalStoreController {
 
     private final DigitalStoreApplicationService applicationService;
 
+    private final CheckoutFormValidator checkoutFormValidator;
+
     private final Cart cart;
+
+    @InitBinder
+    protected void initBinder(final WebDataBinder binder) {
+        binder.addValidators(checkoutFormValidator);
+    }
 
     /**
      * Renders the index page
@@ -88,7 +101,8 @@ public class DigitalStoreController {
      * @return the checkout page
      */
     @GetMapping("/checkout")
-    public String checkout() {
+    public String checkout(final Model model) {
+        model.addAttribute("checkoutForm", new CheckoutForm());
         return "checkout";
     }
 
@@ -98,7 +112,16 @@ public class DigitalStoreController {
      * @return the result page after processing
      */
     @PostMapping("/checkout")
-    public String performCheckout() {
+    public String performCheckout(@ModelAttribute @Valid final CheckoutForm checkoutForm, final BindingResult result,
+            final Model model) {
+        if (result.hasErrors()) {
+            for (final FieldError error : result.getFieldErrors()) {
+                model.addAttribute(error.getField() + "Error", error.getDefaultMessage());
+            }
+
+            return "checkout";
+        }
+
         return "redirect:/purchase-done";
     }
 

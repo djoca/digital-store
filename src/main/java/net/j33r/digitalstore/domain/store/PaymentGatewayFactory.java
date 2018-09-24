@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class PaymentGatewayFactory {
+class PaymentGatewayFactory {
 
     private final Map<String, PaymentGateway> gateways;
 
@@ -28,7 +28,7 @@ public class PaymentGatewayFactory {
      * @param provider
      * @return a {@link PaymentGateway}
      */
-    public PaymentGateway getPaymentGateway(final String provider) {
+    PaymentGateway getPaymentGateway(final String provider) {
         return gateways.get(provider);
     }
 }

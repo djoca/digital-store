@@ -20,6 +20,10 @@ public class MasterCardPaymentGateway implements PaymentGateway {
 
     @Override
     public void checkout(final CreditCard creditCard, final BigDecimal amount) throws PaymentGatewayException {
+        if (!"MasterCard".equals(creditCard.getBrand())) {
+            throw new PaymentGatewayException();
+        }
+
         if (creditCard.getCvv().length() != 3) {
             throw new PaymentGatewayException();
         }

@@ -19,6 +19,10 @@ public class VisaPaymentGateway implements PaymentGateway {
 
     @Override
     public void checkout(final CreditCard creditCard, final BigDecimal amount) throws PaymentGatewayException {
+        if (!"Visa".equals(creditCard.getBrand())) {
+            throw new PaymentGatewayException();
+        }
+
         if (amount.doubleValue() > 200) {
             throw new PaymentGatewayException();
         }

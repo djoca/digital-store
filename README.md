@@ -14,10 +14,18 @@ Clone this project to your machine.
 
     git clone https://github.com/djoca/digital-store.git
 
-Then, run the server:
+Then, enter the digital-store directory.
+
+    cd digital-store
+
+And run the server.
 
     mvn spring-boot:run
-    
+
+Open your browser and open the Digital Store page at the address below.
+
+    http://localhost:8080
+
 ## Testing
 
 Run the tests with command bellow:
